@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贵州天气健康分析 - 离线模式</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .offline-container {
+            max-width: 400px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            margin-bottom: 15px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        p {
+            margin-bottom: 15px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+            min-width: 180px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .tips {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .tips p {
+            margin-bottom: 8px;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .online {
+            background: #4CAF50;
+        }
+
+        .offline {
+            background: #FF9800;
+        }
+
+        @media (max-width: 480px) {
+            .offline-container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .icon {
+                font-size: 60px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="offline-container">
+        <div class="icon"></div>
+        <h1>网络连接已断开</h1>
+        <p>当前处于离线状态，部分功能可能无法使用。</p>
+        <p>请检查网络连接后刷新页面，或使用已缓存的数据。</p>
+
+        <button class="btn" onclick="location.reload()">
+            <span class="status-indicator offline"></span>
+            重新连接
+        </button>
+
+        <div class="tips">
+            <p><strong> 离线功能提示：</strong></p>
+            <p>✅ 可以查看最近访问过的城市数据</p>
+            <p>✅ 已缓存的历史数据仍然可用</p>
+            <p>✅ 数据会在联网时自动更新</p>
+            <p>✅ 支持添加到主屏幕使用</p>
+        </div>
+    </div>
+
+    <script>
+        // 检测网络状态
+        function updateNetworkStatus() {
+            const statusIndicator = document.querySelector('.status-indicator');
+            const reconnectBtn = document.querySelector('.btn');
+
+            if (navigator.onLine) {
+                statusIndicator.className = 'status-indicator online';
+                reconnectBtn.innerHTML = '<span class="status-indicator online"></span>网络已恢复，点击刷新';
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            } else {
+                statusIndicator.className = 'status-indicator offline';
+                reconnectBtn.innerHTML = '<span class="status-indicator offline"></span>重新连接';
+            }
+        }
+
+        // 监听网络状态变化
+        window.addEventListener('online', updateNetworkStatus);
+        window.addEventListener('offline', updateNetworkStatus);
+
+        // 初始状态检查
+        updateNetworkStatus();
+
+        // 每隔5秒尝试重连
+        setInterval(() => {
+            if (navigator.onLine) {
+                location.reload();
+            }
+        }, 5000);
+
+        // 添加键盘快捷键支持
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                location.reload();
+            }
+            if (e.key === 'Escape') {
+                history.back();
+            }
+        });
+    </script>
+</body>
