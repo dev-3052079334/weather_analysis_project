@@ -1,0 +1,29 @@
+[theme]
+primaryColor = "#667eea"
+backgroundColor = "#f8f9fa"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#262730"
+font = "sans serif"
+
+[browser]
+serverAddress = "0.0.0.0"
+gatherUsageStats = false
+
+[server]
+port = 8501
+enableCORS = true
+maxUploadSize = 10
+enableXsrfProtection = false
+
+# PWA相关设置
+[server.customHeaders]
+# 确保正确缓存
+Cache-Control = "no-cache, no-store, must-revalidate"
+Pragma = "no-cache"
+Expires = "0"
+
+# 允许Service Worker
+Content-Security-Policy = "default-src 'self' https://*.open-meteo.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:;"
+
+# PWA支持
+Link = '</manifest.json>; rel="manifest"'
