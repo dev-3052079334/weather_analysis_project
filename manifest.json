@@ -1,0 +1,42 @@
+{
+    "name": "贵州天气健康分析",
+    "short_name": "天气健康",
+    "description": "贵州地区天气健康分析与疾病风险预警系统",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#667eea",
+    "theme_color": "#764ba2",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ],
+    "categories": [
+        "health",
+        "weather",
+        "lifestyle"
+    ],
+    "shortcuts": [
+        {
+            "name": "贵阳市",
+            "short_name": "贵阳",
+            "description": "查看贵阳市天气健康分析",
+            "url": "/?city=贵阳市"
+        },
+        {
+            "name": "毕节市",
+            "short_name": "毕节",
+            "description": "查看毕节市天气健康分析",
+            "url": "/?city=毕节市"
+        }
+    ]
